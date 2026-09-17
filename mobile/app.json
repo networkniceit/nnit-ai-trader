@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "NNIT AI Trader",
+    "slug": "nnit-ai-trader",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#0b1220"
+    },
+    "android": {
+      "package": "com.nnit.aitrader",
+      "usesCleartextTraffic": true,
+      "networkSecurityConfig": "./network_security_config.xml"
+    },
+    "ios": {
+      "bundleIdentifier": "com.nnit.aitrader"
+    },
+    "plugins": [
+      "./plugins/withNetworkSecurity"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "c8970332-0a8c-4665-832b-45fec4bcfee8"
+      }
+    },
+    "plugins": [
+      "expo-asset"
+    ]
+  }
+}

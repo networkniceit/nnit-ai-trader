@@ -1,0 +1,32 @@
+{
+  "name": "nnit-ai-trader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:backend": "npm --prefix backend start",
+    "start:dashboard": "npm --prefix dashboard run dev -- --host 0.0.0.0",
+    "start:all": "powershell -ExecutionPolicy Bypass -File scripts/start-all.ps1",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.18.0",
+    "bcryptjs": "^3.0.3",
+    "ccxt": "^4.5.59",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "helmet": "^8.2.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.7.0",
+    "morgan": "^1.11.0",
+    "node-cron": "^4.3.0",
+    "pg": "^8.21.0",
+    "redis": "^6.0.0",
+    "socket.io": "^4.8.3",
+    "winston": "^3.19.0"
+  }
+}

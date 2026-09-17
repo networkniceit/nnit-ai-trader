@@ -1,0 +1,12 @@
+node_modules/
+**/node_modules/
+.env
+**/.env
+dist/
+**/dist/
+**/logs/
+**/.git-eas-backup/
+backend/%SystemDrive%/
+backend/=
+=
+mobile/.git-eas-backup/
