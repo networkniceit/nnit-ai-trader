@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 
-const API = import.meta.env.VITE_API_URL || ''
+const API = import.meta.env.VITE_API_URL || 'https://nnit-ai-trader-production.up.railway.app'
 
 function App() {
   const [status, setStatus] = useState(null)

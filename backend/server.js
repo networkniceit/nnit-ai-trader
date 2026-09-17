@@ -23,9 +23,17 @@ app.use(
 app.use(cors())
 app.use(express.json())
 
-const frontendPath = path.join(__dirname, '..', 'dashboard', 'dist')
-const frontendIndex = path.join(frontendPath, 'index.html')
-app.use(express.static(frontendPath))
+const frontendCandidates = [
+    path.join(__dirname, 'dashboard', 'dist'),
+    path.join(__dirname, '..', 'dashboard', 'dist')
+]
+const frontendPath = frontendCandidates.find(candidate => fs.existsSync(candidate))
+const frontendIndex = frontendPath
+    ? path.join(frontendPath, 'index.html')
+    : null
+if (frontendPath) {
+    app.use(express.static(frontendPath))
+}
 
 // Routes
 app.use('/trade', tradeRoutes)
@@ -34,7 +42,7 @@ app.use('/history', historyRoutes)
 // Root
 app.get('/', (req, res) => {
 
-    if (fs.existsSync(frontendIndex)) {
+    if (frontendIndex && fs.existsSync(frontendIndex)) {
         return res.sendFile(frontendIndex)
     }
 
