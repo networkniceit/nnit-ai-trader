@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 
-const API = process.env.EXPO_PUBLIC_API_URL || 'http://192.168.0.251:5000'
+const API = process.env.EXPO_PUBLIC_API_URL || 'https://nnit-ai-trader-production.up.railway.app'
 
 export default function App() {
   const [status, setStatus] = useState(null)
