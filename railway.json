@@ -4,8 +4,8 @@
     "NIXPACKS_NODE_VERSION": "20"
   },
   "build": {
-    "builder": "NIXPACKS",
-    "buildCommand": "npm install --prefix backend --omit=dev && npm install --prefix dashboard && npm run build --prefix dashboard"
+    "builder": "DOCKERFILE",
+    "dockerfilePath": "docker/Dockerfile"
   },
   "deploy": {
     "startCommand": "npm --prefix backend start",
