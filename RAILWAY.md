@@ -2,7 +2,7 @@
 
 Create two Railway services from this GitHub repository.
 
-For the backend service, leave the root directory empty (`/`). The root `railway.json` explicitly installs and starts `backend/server.js`.
+For the backend service, leave the root directory empty (`/`). The root `railway.json` explicitly builds with `Dockerfile` and starts `backend/server.js`.
 
 ## Backend service
 
