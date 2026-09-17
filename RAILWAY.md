@@ -2,9 +2,11 @@
 
 Create two Railway services from this GitHub repository.
 
+For the backend service, leave the root directory empty (`/`). The root `railway.json` explicitly installs and starts `backend/server.js`.
+
 ## Backend service
 
-Set the service root directory to `/backend` and use `backend/railway.json`.
+Alternatively, set the service root directory to `/backend` and use `backend/railway.json`.
 Add the required environment variables in Railway, including `JWT_SECRET` and any broker credentials. Railway provides `PORT` automatically.
 
 After deployment, verify:

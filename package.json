@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "npm --prefix backend start",
     "start:backend": "npm --prefix backend start",
     "start:dashboard": "npm --prefix dashboard run dev -- --host 0.0.0.0",
     "start:all": "powershell -ExecutionPolicy Bypass -File scripts/start-all.ps1",
