@@ -1,5 +1,7 @@
 const express = require('express')
 const cors = require('cors')
+const path = require('path')
+const fs = require('fs')
 require('dotenv').config()
 
 const startScheduler = require('./services/scheduler')
@@ -21,12 +23,20 @@ app.use(
 app.use(cors())
 app.use(express.json())
 
+const frontendPath = path.join(__dirname, '..', 'dashboard', 'dist')
+const frontendIndex = path.join(frontendPath, 'index.html')
+app.use(express.static(frontendPath))
+
 // Routes
 app.use('/trade', tradeRoutes)
 app.use('/history', historyRoutes)
 
 // Root
 app.get('/', (req, res) => {
+
+    if (fs.existsSync(frontendIndex)) {
+        return res.sendFile(frontendIndex)
+    }
 
     res.json({
 
