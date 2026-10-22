@@ -185,7 +185,7 @@ async function tradeEngine() {
                 }
 
                 const state =
-                    portfolio.getPortfolio()
+                    structuredClone(portfolio.getPortfolio())
 
                 const entryPrice =
                     state.entryPrices[
@@ -382,7 +382,7 @@ async function tradeEngine() {
 
                             symbol,
 
-                            quantity: 1,
+                            quantity: portfolio.getPortfolio().holdings[symbol] - (state.holdings[symbol] || 0),
 
                             entryPrice:
                                 price,

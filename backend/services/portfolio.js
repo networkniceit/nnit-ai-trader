@@ -1,12 +1,13 @@
+const nnitPaperState = require('./nnitPaperState')
 const MAX_OPEN_POSITIONS = 3
 const RISK_PER_TRADE = 0.02
 
-let portfolio = {
+let portfolio = nnitPaperState.load({
     cash: 10000,
     holdings: {},
     entryPrices: {},
     pnl: 0
-}
+})
 
 function getPositionSize(price) {
 
@@ -146,9 +147,23 @@ function getPortfolio() {
 
 }
 
+// Save every successful paper mutation; restore memory if the write fails.
+function nnitPersisted(operation) {
+    return (...args) => {
+        const previous = structuredClone(portfolio)
+        try {
+            const result = operation(...args)
+            if (result) nnitPaperState.save(portfolio)
+            return result
+        } catch (error) {
+            portfolio = previous
+            throw error
+        }
+    }
+}
 module.exports = {
-    buy,
-    sell,
+    buy: nnitPersisted(buy),
+    sell: nnitPersisted(sell),
     getPortfolio,
     getPositionSize,
     canOpenNewTrade

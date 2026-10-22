@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const recent = require('./tradeHistory');
 const legacy = require('../database/tradeHistory');
-const filename = path.join(__dirname, '..', 'logs', 'trades.log');
+const filename = path.join(require('./nnitPaperState').directory, 'trades.log');
 function getTrades({ disk = fs, file = filename } = {}) {
   const collected = [];
   // Read a bounded tail without changing or truncating the original log.

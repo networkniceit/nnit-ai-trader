@@ -1,13 +1,8 @@
 const fs = require('fs')
 const path = require('path')
 
-const TRADE_LOG_FILE =
-    path.join(
-        __dirname,
-        '..',
-        'logs',
-        'trades.log'
-    )
+const TRADE_LOG_FILE = path.join(require('./nnitPaperState').directory, 'trades.log')
+fs.mkdirSync(path.dirname(TRADE_LOG_FILE), { recursive: true })
 
 let tradeCounter = 1
 
