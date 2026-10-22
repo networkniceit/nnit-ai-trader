@@ -12,7 +12,15 @@ function validate(state) {
     }
   }
   for (const symbol of Object.keys(state.holdings)) if (!Object.hasOwn(state.entryPrices, symbol)) throw new Error('Saved NNIT entry price missing');
-  return { cash: state.cash, holdings: { ...state.holdings }, entryPrices: { ...state.entryPrices }, pnl: state.pnl };
+  let dailyRisk;
+  if (state.dailyRisk !== undefined) {
+    const risk = state.dailyRisk;
+    if (!risk || typeof risk !== 'object' || !/^\d{4}-\d{2}-\d{2}$/.test(risk.day) ||
+        !Number.isFinite(risk.referenceCapital) || risk.referenceCapital < 0 ||
+        !Number.isFinite(risk.realizedLoss) || risk.realizedLoss < 0) throw new Error('Invalid saved daily risk state');
+    dailyRisk = { day: risk.day, referenceCapital: risk.referenceCapital, realizedLoss: risk.realizedLoss };
+  }
+  return { ...(dailyRisk ? { dailyRisk } : {}), cash: state.cash, holdings: { ...state.holdings }, entryPrices: { ...state.entryPrices }, pnl: state.pnl };
 }
 function save(state) {
   const checked = validate(state);

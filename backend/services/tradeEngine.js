@@ -42,16 +42,6 @@ async function runTradeEngine() {
 
         console.log('🔄 SCANNING MARKET...')
 
-        if (!risk.canTrade()) {
-
-            console.log(
-                'Risk manager blocked trading'
-            )
-
-            return
-
-        }
-
         const markets = await scanner()
 
         if (
@@ -354,6 +344,7 @@ async function runTradeEngine() {
                 if (
                     finalSignal ===
                         'BUY' &&
+                    risk.canTrade() &&
                     portfolio.canOpenNewTrade() &&
                     !state.holdings[
                         symbol
