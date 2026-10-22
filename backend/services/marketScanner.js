@@ -16,20 +16,6 @@ const request = axios.create({
 })
 
 async function fetchPrice(symbol) {
-    const marketSymbol = symbol.replace('/', '')
-
-    try {
-        const response = await request.get(
-            'https://api.binance.com/api/v3/ticker/price',
-            { params: { symbol: marketSymbol } }
-        )
-        const price = Number(response.data.price)
-        if (Number.isFinite(price)) return price
-    }
-    catch (error) {
-        console.warn(`Binance price unavailable for ${symbol}: ${error.message}`)
-    }
-
     const response = await request.get(
         `https://api.coinbase.com/v2/prices/${symbol.replace('/', '-')}/spot`
     )
