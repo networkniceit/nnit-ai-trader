@@ -9,7 +9,12 @@ let portfolio = nnitPaperState.load({
     pnl: 0
 })
 
+function validMarket(symbol, price) {
+    return typeof symbol === 'string' && /^[A-Z0-9]{2,12}\/[A-Z0-9]{2,12}$/.test(symbol) && Number.isFinite(price) && price > 0
+}
+
 function getPositionSize(price) {
+    if (!Number.isFinite(price) || price <= 0) return 0
 
     const riskAmount = portfolio.cash * RISK_PER_TRADE
 
@@ -28,6 +33,7 @@ function canOpenNewTrade() {
 }
 
 function buy(symbol, price) {
+    if (!validMarket(symbol, price) || Object.hasOwn(portfolio.holdings, symbol)) return false
 
     if (!canOpenNewTrade()) {
 
@@ -85,6 +91,8 @@ function sell(
     amount = null
 ) {
 
+    if (!validMarket(symbol, price) || (amount !== null && (!Number.isFinite(amount) || amount <= 0))) return false
+
     if (!portfolio.holdings[symbol]) {
 
         console.log("NO HOLDINGS")
@@ -94,14 +102,15 @@ function sell(
     }
 
     if (
-        amount === null ||
-        amount > portfolio.holdings[symbol]
+        amount === null
     ) {
 
         amount =
             portfolio.holdings[symbol]
 
     }
+
+    if (amount > portfolio.holdings[symbol]) return false
 
     const entry =
         portfolio.entryPrices[symbol]

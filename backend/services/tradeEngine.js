@@ -36,7 +36,7 @@ function recordTrade(symbol) {
 
 }
 
-async function tradeEngine() {
+async function runTradeEngine() {
 
     try {
 
@@ -88,7 +88,7 @@ async function tradeEngine() {
                     Number(market.price)
 
                 if (
-                    !Number.isFinite(price)
+                    !Number.isFinite(price) || price <= 0
                 ) {
 
                     continue
@@ -546,6 +546,13 @@ async function tradeEngine() {
 
 }
 
+let scanInProgress = false
+async function tradeEngine() {
+    if (scanInProgress) return
+    scanInProgress = true
+    try { return await runTradeEngine() }
+    finally { scanInProgress = false }
+}
 module.exports = tradeEngine
 
 
