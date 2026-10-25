@@ -184,15 +184,9 @@ async function runTradeEngine() {
 
                 // STOP LOSS
 
-                if (
-                    state.holdings[
-                        symbol
-                    ] &&
-                    stopLossManager(
-                        symbol,
-                        price
-                    )
-                ) {
+                const stopReason = state.holdings[symbol]
+                    ? stopLossManager(symbol, price) : false
+                if (stopReason) {
 
                     const sold =
                         portfolio.sell(
@@ -202,12 +196,14 @@ async function runTradeEngine() {
 
                     if (sold) {
 
+                        stopLossManager.resetPosition(symbol)
+
                         recordTrade(
                             symbol
                         )
 
                         telegramNotifier(
-                            `STOP LOSS ${symbol}`
+                            `${stopReason} ${symbol}`
                         )
 
                         tradeHistory.recordTrade({
@@ -236,7 +232,7 @@ async function runTradeEngine() {
                                 ],
 
                             reason:
-                                'STOP_LOSS'
+                                stopReason
 
                         })
 
@@ -245,7 +241,7 @@ async function runTradeEngine() {
                             symbol,
 
                             type:
-                                'STOP_LOSS',
+                                stopReason,
 
                             price,
 
@@ -280,6 +276,8 @@ async function runTradeEngine() {
                         )
 
                     if (sold) {
+
+                        stopLossManager.resetPosition(symbol)
 
                         recordTrade(
                             symbol
@@ -359,6 +357,8 @@ async function runTradeEngine() {
 
                     if (bought) {
 
+                        stopLossManager.resetPosition(symbol, price)
+
                         recordTrade(
                             symbol
                         )
@@ -421,6 +421,8 @@ async function runTradeEngine() {
                         )
 
                     if (sold) {
+
+                        stopLossManager.resetPosition(symbol)
 
                         recordTrade(
                             symbol

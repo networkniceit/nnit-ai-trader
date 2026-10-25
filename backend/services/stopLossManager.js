@@ -3,7 +3,7 @@ const portfolio = require('./portfolio')
 const STOP_LOSS = 0.03 // 3%
 const TRAILING_STOP = 0.02
 
-let peakPrices = {}
+const peakPrices = Object.create(null)
 
 function checkStopLoss(symbol, price) {
 
@@ -11,7 +11,10 @@ function checkStopLoss(symbol, price) {
 
     const entry = data.entryPrices[symbol]
 
-    if (!entry) return false
+    if (!entry || !data.holdings[symbol]) {
+        delete peakPrices[symbol]
+        return false
+    }
 
     // update peak
     if (!peakPrices[symbol] || price > peakPrices[symbol]) {
@@ -36,4 +39,10 @@ function checkStopLoss(symbol, price) {
     return false
 }
 
+// Called only after a successful persisted buy or sale.
+function resetPosition(symbol, entryPrice = null) {
+    delete peakPrices[symbol]
+    if (Number.isFinite(entryPrice) && entryPrice > 0) peakPrices[symbol] = entryPrice
+}
+checkStopLoss.resetPosition = resetPosition
 module.exports = checkStopLoss
